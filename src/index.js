@@ -24,7 +24,7 @@ const DEBOUNCE_DELAY = 300;
 //   console.log(response[0].name.official);
 // });
 
-fetchCountries('japan').then(response => {
+fetchCountries('ukraine').then(response => {
   renderUserList(response);
   // console.log(response);
 });
@@ -33,13 +33,15 @@ fetchCountries('japan').then(response => {
 function renderUserList(name) {
   const markup = name
     .map(name => {
-      console.dir(name.flags);
-      const languaGua = name.languages;
+      const picFlag = name.flags;
+      const languaGes = name.languages;
       return `<li>
-            <p><b>🇺🇦</b>: ${name.name.official}</p>
+            <p><b><img src="${picFlag['svg']}" width="21"> </b>: ${
+        name.name.official
+      }</p>
             <p><b>Capital</b>: ${name.capital}</p>
             <p><b>Population</b>: ${name.population}</p>
-            <p><b>Languages</b>: ${Object.values(languaGua)}</p>
+            <p><b>Languages</b>: ${Object.values(languaGes)}</p>
           </li>`;
     })
     .join('');
