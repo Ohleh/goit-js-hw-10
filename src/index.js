@@ -1,5 +1,7 @@
 import './css/styles.css';
-import fetchCountries from './js/fetchCountries';
+import fetchCountry from './js/fetchCountries';
+var debounce = require('lodash.debounce');
+// import debounce from 'lodash.debounce';
 
 const refs = {
   serchInput: document.querySelector('#search-box'),
@@ -9,36 +11,37 @@ const refs = {
 
 const DEBOUNCE_DELAY = 300;
 
-// refs.serchInput.addEventListener('input', onSearchIpnut);
+refs.serchInput.addEventListener(
+  'input',
+  debounce(onSearchIpnut),
+  DEBOUNCE_DELAY
+);
 
-// function onSearchIpnut(e) {
-//   const searchInput = e.currentTarget.value;
-//   fetchCountries(searchInput).then(response => renderUserList(response));
-// }
+function onSearchIpnut(e) {
+  const searchInput = e.target.value;
+  //   console.log(e.target.value);
+  const searchInputKillSpace = searchInput.trim();
+  fetchCountry(searchInputKillSpace).then(response => renderUserList(response));
+}
 
-// const ddd = fetchCountries();
-// const aaa = ddd.map(e => e.name);
-// console.log(aaa);
-
-// fetchCountries().then(response => {
-//   console.log(response[0].name.official);
+// fetchCountry('ukraine').then(response => {
+//   renderUserList(response);
 // });
 
-fetchCountries('ukraine').then(response => {
-  renderUserList(response);
-  // console.log(response);
-});
-//   .then(console.log(renderUserList));
-
 function renderUserList(name) {
+  console.log(name.length);
+
   const markup = name
     .map(name => {
       const picFlag = name.flags;
       const languaGes = name.languages;
+      //   console.log('name.name.official', name.name.official);
+      //     console.log('name.official', name.official);
+      //     console.log('name.capital', name.capital);
       return `<li>
-            <p><b><img src="${picFlag['svg']}" width="21"> </b>: ${
+            <p><img src="${picFlag['svg']}" width="20"> : <b>${
         name.name.official
-      }</p>
+      }</b></p>
             <p><b>Capital</b>: ${name.capital}</p>
             <p><b>Population</b>: ${name.population}</p>
             <p><b>Languages</b>: ${Object.values(languaGes)}</p>
