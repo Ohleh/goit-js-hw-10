@@ -2,6 +2,7 @@ import './css/styles.css';
 import fetchCountry from './js/fetchCountries';
 var debounce = require('lodash.debounce');
 // import debounce from 'lodash.debounce';
+import Notiflix from 'notiflix';
 
 const refs = {
   serchInput: document.querySelector('#search-box'),
@@ -22,7 +23,18 @@ function onSearchIpnut(e) {
   //   console.log(e.target);
   const searchInputKillSpace = searchInput.trim();
   //   console.dir(searchInputKillSpace);
-  fetchCountry(searchInputKillSpace).then(response => renderUserList(response));
+  fetchCountry(searchInputKillSpace)
+    .then(response => {
+      renderUserList(response);
+      return response;
+    })
+    .then(er => {
+      //   console.log(er.status);
+      if (er.status === 404)
+        return Notiflix.Notify.failure(
+          'Oops, there is no country with that name'
+        );
+    });
   if (searchInputKillSpace === '') {
     refs.countryList.innerHTML = '';
     refs.countryInfo.innerHTML = '';
@@ -35,14 +47,19 @@ function onSearchIpnut(e) {
 
 function renderUserList(name) {
   //   console.log(name.length);
-  countryListFunct(name);
-
+  // countryListFunct(name);
+  if (name.length > 10) {
+    Notiflix.Notify.info(
+      'Too many matches found. Please enter a more specific name.'
+    );
+  }
   if (name.length <= 1) {
     refs.countryList.innerHTML = '';
     countryInfofunct(name);
   }
-  if (name.length > 1) {
+  if ((name.length > 2) & (name.length < 10)) {
     refs.countryInfo.innerHTML = '';
+    countryListFunct(name);
   }
 }
 

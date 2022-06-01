@@ -6,5 +6,6 @@ export default function fetchCountries(name) {
   ).then(response => {
     return response.json();
   });
+  // .catch(error => console.log('erorRRR', error));
   // .then(name => console.log(name.official));
 }
