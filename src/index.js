@@ -32,7 +32,7 @@ function onSearchIpnut(e) {
       //   console.log(er.status);
       if (er.status === 404)
         return Notiflix.Notify.failure(
-          'Oops, there is no country with that name'
+          'Denis, there is no country with that name'
         );
     });
   if (searchInputKillSpace === '') {
@@ -50,7 +50,7 @@ function renderUserList(name) {
   // countryListFunct(name);
   if (name.length > 10) {
     Notiflix.Notify.info(
-      'Too many matches found. Please enter a more specific name.'
+      'Denis, too many matches found. Please enter a more specific name.'
     );
   }
   if (name.length <= 1) {
