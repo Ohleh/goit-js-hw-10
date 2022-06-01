@@ -19,9 +19,14 @@ refs.serchInput.addEventListener(
 
 function onSearchIpnut(e) {
   const searchInput = e.target.value;
-  //   console.log(e.target.value);
+  //   console.log(e.target);
   const searchInputKillSpace = searchInput.trim();
+  //   console.dir(searchInputKillSpace);
   fetchCountry(searchInputKillSpace).then(response => renderUserList(response));
+  if (searchInputKillSpace === '') {
+    refs.countryList.innerHTML = '';
+    refs.countryInfo.innerHTML = '';
+  }
 }
 
 // fetchCountry('ukraine').then(response => {
@@ -29,9 +34,34 @@ function onSearchIpnut(e) {
 // });
 
 function renderUserList(name) {
-  console.log(name.length);
+  //   console.log(name.length);
+  countryListFunct(name);
 
-  const markup = name
+  if (name.length <= 1) {
+    refs.countryList.innerHTML = '';
+    countryInfofunct(name);
+  }
+  if (name.length > 1) {
+    refs.countryInfo.innerHTML = '';
+  }
+}
+
+function countryListFunct(name) {
+  const marklist = name
+    .map(name => {
+      const picFlag = name.flags;
+      const languaGes = name.languages;
+      return `<li>
+              <p><img src="${picFlag['svg']}" width="40"> : <b>${name.name.official}</b></p>
+
+            </li>`;
+    })
+    .join('');
+  refs.countryList.innerHTML = marklist;
+}
+
+function countryInfofunct(name) {
+  const markupInfo = name
     .map(name => {
       const picFlag = name.flags;
       const languaGes = name.languages;
@@ -48,5 +78,5 @@ function renderUserList(name) {
           </li>`;
     })
     .join('');
-  refs.countryInfo.innerHTML = markup;
+  refs.countryInfo.innerHTML = markupInfo;
 }
