@@ -25,16 +25,15 @@ function onSearchIpnut(e) {
   //   console.dir(searchInputKillSpace);
   fetchCountry(searchInputKillSpace)
     .then(response => {
+      //   if (!response.ok) {
+      //   }
       renderUserList(response);
-      return response;
+      //   return response;
     })
-    .then(er => {
-      //   console.log(er.status);
-      if (er.status === 404)
-        return Notiflix.Notify.failure(
-          'Denis, there is no country with that name'
-        );
+    .catch(error => {
+      console.log('404 Not Found + : ' + error);
     });
+
   if (searchInputKillSpace === '') {
     refs.countryList.innerHTML = '';
     refs.countryInfo.innerHTML = '';
@@ -46,9 +45,9 @@ function onSearchIpnut(e) {
 // });
 
 function renderUserList(name) {
-  //   console.log(name.length);
+  console.log(name.length);
   // countryListFunct(name);
-  if (name.length > 10) {
+  if (name.length > 2) {
     Notiflix.Notify.info(
       'Denis, too many matches found. Please enter a more specific name.'
     );
