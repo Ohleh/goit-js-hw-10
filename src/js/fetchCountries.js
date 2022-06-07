@@ -13,9 +13,9 @@ export default function fetchCountries(name) {
       return response.json();
     })
     .catch(error => {
-      console.log('404 Not Found main fetch : ' + error);
-      return Notiflix.Notify.failure(
-        'Denis, there is no country with that name'
-      );
+      console.log('error in main fetch : ' + error);
+      // return Notiflix.Notify.failure(
+      //   'Denis, there is no country with that name'
+      // );
     });
 }

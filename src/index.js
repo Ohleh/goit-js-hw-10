@@ -20,18 +20,22 @@ refs.serchInput.addEventListener(
 
 function onSearchIpnut(e) {
   const searchInput = e.target.value;
-  //   console.log(e.target);
+  // console.dir(e.target.value);
+  if (e.target.value === ' ') {
+    e.target.value = '';
+    return Notiflix.Notify.success('Pls, use letters to input');
+  }
   const searchInputKillSpace = searchInput.trim();
-  //   console.dir(searchInputKillSpace);
+  // console.dir(searchInputKillSpace);
   fetchCountry(searchInputKillSpace)
     .then(response => {
-      //   if (!response.ok) {
-      //   }
       renderUserList(response);
-      //   return response;
     })
     .catch(error => {
-      console.log('404 Not Found + : ' + error);
+      // console.log('404 Not Found + : ' + error);
+      return Notiflix.Notify.failure(
+        'Denis, there is no country with that name'
+      );
     });
 
   if (searchInputKillSpace === '') {
