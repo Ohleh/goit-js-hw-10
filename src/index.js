@@ -1,7 +1,7 @@
 import './css/styles.css';
 import fetchCountry from './js/fetchCountries';
-var debounce = require('lodash.debounce');
 // import debounce from 'lodash.debounce';
+import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
 
 const refs = {
@@ -14,8 +14,7 @@ const DEBOUNCE_DELAY = 300;
 
 refs.serchInput.addEventListener(
   'input',
-  debounce(onSearchIpnut),
-  DEBOUNCE_DELAY
+  debounce(onSearchIpnut, DEBOUNCE_DELAY)
 );
 
 function onSearchIpnut(e) {
